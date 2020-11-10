@@ -1,6 +1,6 @@
-improt time
+import time
 import numpy as np
-from Arm impor Arm, R
+from Arm import Arm, R
 
 
 def main():
