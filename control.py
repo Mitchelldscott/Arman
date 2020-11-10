@@ -22,8 +22,5 @@ def main():
 		if (cycle_t - total_t > 0):
 			time.sleep(cycle_t - total_t)
 
-	plt.show()
-
-
 if __name__=="__main__":
 	main()
