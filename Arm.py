@@ -117,7 +117,7 @@ class Arm:
 		"""
 		if self.sim:
 			return
-
+		print(self.poseActual)
 		self.kit.servo[0].angle = self.poseActual[0]
 		self.kit.servo[4].angle = self.poseActual[1]
 		self.kit.servo[7].angle = self.poseActual[2]
