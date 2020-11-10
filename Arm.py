@@ -1,5 +1,5 @@
 import numpy as np
-#from adafruit_servokit import ServoKit as SK
+from adafruit_servokit import ServoKit as SK
 
 def R(effector, ref=[]):
 	""" Rotates a 3D vector (effector) by some angles (ref)
@@ -35,10 +35,10 @@ class Arm:
 		if not sim:
 			self.kit = SK(channels=16)
 			self.kit.servo[0].angle = self.poseActual[0]
-			self.kit.servo[4].angle = self.poseActual[4]
-			self.kit.servo[7].angle = self.poseActual[7]
-			self.kit.servo[8].angle = self.poseActual[8]
-			self.kit.servo[12].angle = self.poseActual[12]
+			self.kit.servo[4].angle = self.poseActual[1]
+			self.kit.servo[7].angle = self.poseActual[2]
+			self.kit.servo[8].angle = self.poseActual[3]
+			self.kit.servo[12].angle = self.poseActual[4]
 
 		self.pose_restrictions = np.zeros((5,2))
 		self.set_restrictions()
@@ -143,14 +143,24 @@ class Arm:
 		p = np.sign(h0 - h_actual)
 
 		if p < 0:
-			return np.array([0,180,0,45,0])
+			return np.array([180,0,45])
 		else:
-			return np.array([0,90,90,0,0])
+			return np.array([90,90,0])
 
 	def move_to(self, target):
 		# alpha and theta translate directly to the world frame
-		c1 = np.array([target[2],0,0,0,0])
-		c3 = np.array([0,0,0,0,target[3]])
-		c2 = self.control_height(target[1])
+		c1 = self.control_height(target[1])
 
-		self.adjust_pose(c1 + c2 + c3)
+
+		self.adjust_pose([target[2], c1[:], target[3])
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
