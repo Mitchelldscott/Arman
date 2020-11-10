@@ -71,12 +71,9 @@ class Arm:
 
 			TODO: update into matrix form, got to baked 
 		"""
-		self.update_self()
-
 		# unrotated base joint is a constant
 		solved_poses = [np.array([0, 0, self.links[0], 0, 0, 0])]
 		alpha, beta, gamma, phi, theta = np.radians(self.poseActual) * [-1,1,1,1,1]
-		print(f'Solving Joints pose: {self.poseActual}')
 		x1 = 0
 		z1 = self.links[1]
 		solved_poses.append(np.array([x1, 0, z1, 0, beta, 0]))
@@ -131,14 +128,13 @@ class Arm:
 		self.update_self()
 
 		dp = self.alpha * np.sign(target - self.poseActual)
-		print(f'Update step: {self.poseActual + dp}')
+
 		for i,p in enumerate(self.poseActual):
 			m = np.max((self.pose_restrictions[i][0], p + dp[i]))
 			self.poseActual[i] = np.min((self.pose_restrictions[i][1], m))
 
-		print(f'Solving Joints with, pose: {self.poseActual}')
 		self.solve_joint_IK()
-		print(f'Joints solved, pose: {self.poseActual}')
+
 		self.update_phys()
 
 	def control_height(self, h0):
