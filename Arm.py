@@ -152,4 +152,4 @@ class Arm:
 		c1 = self.control_height(target[1])
 
 
-		self.adjust_pose([target[2], c1[:], target[3]])
+		self.adjust_pose([target[2], c1[0], c1[1], c1[2], target[3]])
