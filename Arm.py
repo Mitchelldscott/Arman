@@ -62,7 +62,6 @@ class Arm:
 	def rotate_solution(self, joints):
 		for i,joint in enumerate(joints):
 			self.joint_poses[i] = R(joint, ref=np.array([0,0,-np.radians(self.poseActual[0])]))
-		print(f'Joints Rotated: {self.poseActual}')
 
 	def solve_joint_IK(self):
 		""" finds the world frame endpoint of the next link
@@ -74,6 +73,7 @@ class Arm:
 		# unrotated base joint is a constant
 		solved_poses = [np.array([0, 0, self.links[0], 0, 0, 0])]
 		alpha, beta, gamma, phi, theta = np.radians(self.poseActual) * [-1,1,1,1,1]
+		
 		x1 = 0
 		z1 = self.links[1]
 		solved_poses.append(np.array([x1, 0, z1, 0, beta, 0]))
@@ -149,6 +149,4 @@ class Arm:
 	def move_to(self, target):
 		# alpha and theta translate directly to the world frame
 		c1 = self.control_height(target[1])
-
-		print(f'Adjusting pose to {target[2]}, {c1[0]}, {c1[1]}, {c1[2]}, {target[3]}')
 		self.adjust_pose([target[2], c1[0], c1[1], c1[2], target[3]])
