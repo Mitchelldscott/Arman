@@ -4,21 +4,21 @@ from adafruit_servokit import ServoKit as SK
 def R(effector, ref=[]):
 	""" Rotates a 3D vector (effector) by some angles (ref)
 		effector can be a 3D vector or a 6D pose
-		if 6D only the x,y,z will be affected. phi, theta, psi need 
+		if 6D only the x,y,z will be affected. phi, theta, psi need
 		to be updated on their own
-		ref must be a list of 3 angles to rotate about each axis 
+		ref must be a list of 3 angles to rotate about each axis
 		default ref is poseActuals angular offsets"""
 	R = np.matrix([
 					[np.cos(ref[1])*np.cos(ref[2]),
-					np.cos(ref[1])*np.sin(ref[2]), 
+					np.cos(ref[1])*np.sin(ref[2]),
 					-np.sin(ref[1])
 				],
-					[np.sin(ref[0])*np.sin(ref[1])*np.cos(ref[2])-(np.cos(ref[0])*np.sin(ref[2])), 
-					np.sin(ref[0])*np.sin(ref[1])*np.sin(ref[2])+(np.cos(ref[0])*np.cos(ref[2])), 
+					[np.sin(ref[0])*np.sin(ref[1])*np.cos(ref[2])-(np.cos(ref[0])*np.sin(ref[2])),
+					np.sin(ref[0])*np.sin(ref[1])*np.sin(ref[2])+(np.cos(ref[0])*np.cos(ref[2])),
 					np.sin(ref[0])*np.cos(ref[1])
 				],
-					[np.cos(ref[0])*np.sin(ref[1])*np.cos(ref[2])+(np.sin(ref[0])*np.sin(ref[2])), 
-					np.cos(ref[0])*np.sin(ref[1])*np.sin(ref[2])-(np.sin(ref[0])*np.cos(ref[2])), 
+					[np.cos(ref[0])*np.sin(ref[1])*np.cos(ref[2])+(np.sin(ref[0])*np.sin(ref[2])),
+					np.cos(ref[0])*np.sin(ref[1])*np.sin(ref[2])-(np.sin(ref[0])*np.cos(ref[2])),
 					np.cos(ref[0])*np.cos(ref[1])
 				]
 			])
@@ -108,7 +108,7 @@ class Arm:
 		self.poseActual = np.array([
 			self.kit.servo[0].angle,
 			self.kit.servo[4].angle,
-			self.kit.servo[7].anlge,
+			self.kit.servo[7].angle,
 			self.kit.servo[8].angle,
 			self.kit.servo[12].angle])
 
@@ -152,15 +152,4 @@ class Arm:
 		c1 = self.control_height(target[1])
 
 
-		self.adjust_pose([target[2], c1[:], target[3])
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		self.adjust_pose([target[2], c1[:], target[3]])
