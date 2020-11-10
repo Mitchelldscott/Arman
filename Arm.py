@@ -130,11 +130,12 @@ class Arm:
 		self.update_self()
 
 		dp = self.alpha * np.sign(target - self.poseActual)
-
+		print(f'Update step: {self.poseActual + dp}')
 		for i,p in enumerate(self.poseActual):
 			m = np.max((self.pose_restrictions[i][0], p + dp[i]))
 			self.poseActual[i] = np.min((self.pose_restrictions[i][1], m))
 
+		print(f'Solving Joints with, pose: {self.poseActual}')
 		self.solve_joint_IK()
 		print(f'Joints solved, pose: {self.poseActual}')
 		self.update_phys()
