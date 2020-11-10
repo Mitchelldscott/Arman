@@ -53,15 +53,16 @@ class Arm:
 		return f'({self.world_pose[0]}, {self.world_pose[1]}, {self.world_pose[2]}, {self.world_pose[3]})'
 
 	def set_restrictions(self):
-		self.pose_restrictions[0] = np.array([1, 179])
-		self.pose_restrictions[1] = np.array([31, 149])
-		self.pose_restrictions[2] = np.array([1, 134])
-		self.pose_restrictions[3] = np.array([1, 134])
-		self.pose_restrictions[4] = np.array([1, 179])
+		self.pose_restrictions[0] = np.array([0, 180])
+		self.pose_restrictions[1] = np.array([30, 150])
+		self.pose_restrictions[2] = np.array([0, 135])
+		self.pose_restrictions[3] = np.array([0, 135])
+		self.pose_restrictions[4] = np.array([0, 180])
 
 	def rotate_solution(self, joints):
 		for i,joint in enumerate(joints):
 			self.joint_poses[i] = R(joint, ref=np.array([0,0,-np.radians(self.poseActual[0])]))
+		print(f'Joints Rotated: {self.poseActual}')
 
 	def solve_joint_IK(self):
 		""" finds the world frame endpoint of the next link
@@ -75,7 +76,7 @@ class Arm:
 		# unrotated base joint is a constant
 		solved_poses = [np.array([0, 0, self.links[0], 0, 0, 0])]
 		alpha, beta, gamma, phi, theta = np.radians(self.poseActual) * [-1,1,1,1,1]
-
+		print(f'Solving Joints pose: {self.poseActual}')
 		x1 = 0
 		z1 = self.links[1]
 		solved_poses.append(np.array([x1, 0, z1, 0, beta, 0]))
