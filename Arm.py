@@ -136,6 +136,7 @@ class Arm:
 			self.poseActual[i] = np.min((self.pose_restrictions[i][1], m))
 
 		self.solve_joint_IK()
+		print(f'Joints solved, pose: {self.poseActual}')
 		self.update_phys()
 
 	def control_height(self, h0):
@@ -151,5 +152,5 @@ class Arm:
 		# alpha and theta translate directly to the world frame
 		c1 = self.control_height(target[1])
 
-
+		print(f'Adjusting pose to {target[2]}, {c1[0]}, {c1[1]}, {c1[2]}, {target[3]}')
 		self.adjust_pose([target[2], c1[0], c1[1], c1[2], target[3]])
