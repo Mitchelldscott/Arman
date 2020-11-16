@@ -1,6 +1,6 @@
-improt time
+import time
 import numpy as np
-from Arm impor Arm, R
+from Arm import Arm, R
 
 
 def main():
@@ -21,9 +21,6 @@ def main():
 		# normalize the cycle time
 		if (cycle_t - total_t > 0):
 			time.sleep(cycle_t - total_t)
-
-	plt.show()
-
 
 if __name__=="__main__":
 	main()

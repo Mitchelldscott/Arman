@@ -1,24 +1,24 @@
 import numpy as np
-#from adafruit_servokit import ServoKit as SK
+from adafruit_servokit import ServoKit as SK
 
 def R(effector, ref=[]):
 	""" Rotates a 3D vector (effector) by some angles (ref)
 		effector can be a 3D vector or a 6D pose
-		if 6D only the x,y,z will be affected. phi, theta, psi need 
+		if 6D only the x,y,z will be affected. phi, theta, psi need
 		to be updated on their own
-		ref must be a list of 3 angles to rotate about each axis 
+		ref must be a list of 3 angles to rotate about each axis
 		default ref is poseActuals angular offsets"""
 	R = np.matrix([
 					[np.cos(ref[1])*np.cos(ref[2]),
-					np.cos(ref[1])*np.sin(ref[2]), 
+					np.cos(ref[1])*np.sin(ref[2]),
 					-np.sin(ref[1])
 				],
-					[np.sin(ref[0])*np.sin(ref[1])*np.cos(ref[2])-(np.cos(ref[0])*np.sin(ref[2])), 
-					np.sin(ref[0])*np.sin(ref[1])*np.sin(ref[2])+(np.cos(ref[0])*np.cos(ref[2])), 
+					[np.sin(ref[0])*np.sin(ref[1])*np.cos(ref[2])-(np.cos(ref[0])*np.sin(ref[2])),
+					np.sin(ref[0])*np.sin(ref[1])*np.sin(ref[2])+(np.cos(ref[0])*np.cos(ref[2])),
 					np.sin(ref[0])*np.cos(ref[1])
 				],
-					[np.cos(ref[0])*np.sin(ref[1])*np.cos(ref[2])+(np.sin(ref[0])*np.sin(ref[2])), 
-					np.cos(ref[0])*np.sin(ref[1])*np.sin(ref[2])-(np.sin(ref[0])*np.cos(ref[2])), 
+					[np.cos(ref[0])*np.sin(ref[1])*np.cos(ref[2])+(np.sin(ref[0])*np.sin(ref[2])),
+					np.cos(ref[0])*np.sin(ref[1])*np.sin(ref[2])-(np.sin(ref[0])*np.cos(ref[2])),
 					np.cos(ref[0])*np.cos(ref[1])
 				]
 			])
@@ -35,10 +35,10 @@ class Arm:
 		if not sim:
 			self.kit = SK(channels=16)
 			self.kit.servo[0].angle = self.poseActual[0]
-			self.kit.servo[4].angle = self.poseActual[4]
-			self.kit.servo[7].angle = self.poseActual[7]
-			self.kit.servo[8].angle = self.poseActual[8]
-			self.kit.servo[12].angle = self.poseActual[12]
+			self.kit.servo[4].angle = self.poseActual[1]
+			self.kit.servo[7].angle = self.poseActual[2]
+			self.kit.servo[8].angle = self.poseActual[3]
+			self.kit.servo[12].angle = self.poseActual[4]
 
 		self.pose_restrictions = np.zeros((5,2))
 		self.set_restrictions()
@@ -53,11 +53,11 @@ class Arm:
 		return f'({self.world_pose[0]}, {self.world_pose[1]}, {self.world_pose[2]}, {self.world_pose[3]})'
 
 	def set_restrictions(self):
-		self.pose_restrictions[0] = np.array([1, 179])
-		self.pose_restrictions[1] = np.array([31, 149])
-		self.pose_restrictions[2] = np.array([1, 134])
-		self.pose_restrictions[3] = np.array([1, 134])
-		self.pose_restrictions[4] = np.array([1, 179])
+		self.pose_restrictions[0] = np.array([0, 180])
+		self.pose_restrictions[1] = np.array([30, 150])
+		self.pose_restrictions[2] = np.array([0, 135])
+		self.pose_restrictions[3] = np.array([0, 135])
+		self.pose_restrictions[4] = np.array([0, 180])
 
 	def rotate_solution(self, joints):
 		for i,joint in enumerate(joints):
@@ -70,12 +70,10 @@ class Arm:
 
 			TODO: update into matrix form, got to baked 
 		"""
-		self.update_self()
-
 		# unrotated base joint is a constant
 		solved_poses = [np.array([0, 0, self.links[0], 0, 0, 0])]
 		alpha, beta, gamma, phi, theta = np.radians(self.poseActual) * [-1,1,1,1,1]
-
+		
 		x1 = 0
 		z1 = self.links[1]
 		solved_poses.append(np.array([x1, 0, z1, 0, beta, 0]))
@@ -108,7 +106,7 @@ class Arm:
 		self.poseActual = np.array([
 			self.kit.servo[0].angle,
 			self.kit.servo[4].angle,
-			self.kit.servo[7].anlge,
+			self.kit.servo[7].angle,
 			self.kit.servo[8].angle,
 			self.kit.servo[12].angle])
 
@@ -117,7 +115,7 @@ class Arm:
 		"""
 		if self.sim:
 			return
-
+		print(self.poseActual)
 		self.kit.servo[0].angle = self.poseActual[0]
 		self.kit.servo[4].angle = self.poseActual[1]
 		self.kit.servo[7].angle = self.poseActual[2]
@@ -136,6 +134,7 @@ class Arm:
 			self.poseActual[i] = np.min((self.pose_restrictions[i][1], m))
 
 		self.solve_joint_IK()
+
 		self.update_phys()
 
 	def control_height(self, h0):
@@ -143,14 +142,11 @@ class Arm:
 		p = np.sign(h0 - h_actual)
 
 		if p < 0:
-			return np.array([0,180,0,45,0])
+			return np.array([180,0,45])
 		else:
-			return np.array([0,90,90,0,0])
+			return np.array([90,90,0])
 
 	def move_to(self, target):
 		# alpha and theta translate directly to the world frame
-		c1 = np.array([target[2],0,0,0,0])
-		c3 = np.array([0,0,0,0,target[3]])
-		c2 = self.control_height(target[1])
-
-		self.adjust_pose(c1 + c2 + c3)
+		c1 = self.control_height(target[1])
+		self.adjust_pose([target[2], c1[0], c1[1], c1[2], target[3]])
