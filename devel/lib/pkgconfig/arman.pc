@@ -1,0 +1,1 @@
+/home/m_dyse/Arman/devel/.private/arman/lib/pkgconfig/arman.pc

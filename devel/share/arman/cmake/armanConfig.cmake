@@ -1,0 +1,1 @@
+/home/m_dyse/Arman/devel/.private/arman/share/arman/cmake/armanConfig.cmake

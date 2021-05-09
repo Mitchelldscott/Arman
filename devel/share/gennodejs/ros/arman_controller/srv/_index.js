@@ -1,0 +1,1 @@
+/home/m_dyse/Arman/devel/.private/arman_controller/share/gennodejs/ros/arman_controller/srv/_index.js

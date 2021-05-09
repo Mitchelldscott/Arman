@@ -1,0 +1,8 @@
+prefix=/home/m_dyse/Arman/devel/.private/arman
+
+Name: arman
+Description: Description of arman
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

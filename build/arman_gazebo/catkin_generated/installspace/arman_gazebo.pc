@@ -1,0 +1,8 @@
+prefix=/home/m_dyse/Arman/nit
+
+Name: arman_gazebo
+Description: Description of arman_gazebo
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: roscpp std_msgs gazebo_ros gazebo_ros_control controller_manager xacro urdf

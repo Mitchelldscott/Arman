@@ -1,0 +1,6 @@
+devel_space: /home/m_dyse/Arman/devel
+install: false
+install_space: /home/m_dyse/Arman/nit
+profile: default
+source_space: /home/m_dyse/Arman/src
+workspace: /home/m_dyse/Arman

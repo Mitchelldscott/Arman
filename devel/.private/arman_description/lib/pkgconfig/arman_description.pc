@@ -1,0 +1,8 @@
+prefix=/home/m_dyse/Arman/devel/.private/arman_description
+
+Name: arman_description
+Description: Description of arman_description
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/m_dyse/Arman/nit
+
+Name: freecad_to_gazebo
+Description: Description of freecad_to_gazebo
+Version: 1.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

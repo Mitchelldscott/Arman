@@ -1,0 +1,1 @@
+/home/m_dyse/Arman/devel/.private/freecad_to_gazebo/lib/python2.7/dist-packages/freecad_to_gazebo/__init__.py

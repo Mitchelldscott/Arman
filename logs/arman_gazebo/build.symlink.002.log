@@ -1,0 +1,4 @@
+Linked: (/home/m_dyse/Arman/devel/.private/arman_gazebo/share/arman_gazebo/cmake/arman_gazeboConfig-version.cmake, /home/m_dyse/Arman/devel/share/arman_gazebo/cmake/arman_gazeboConfig-version.cmake)
+Linked: (/home/m_dyse/Arman/devel/.private/arman_gazebo/share/arman_gazebo/cmake/arman_gazeboConfig.cmake, /home/m_dyse/Arman/devel/share/arman_gazebo/cmake/arman_gazeboConfig.cmake)
+Linked: (/home/m_dyse/Arman/devel/.private/arman_gazebo/lib/pkgconfig/arman_gazebo.pc, /home/m_dyse/Arman/devel/lib/pkgconfig/arman_gazebo.pc)
+Symlinking /home/m_dyse/Arman/devel/lib/arman_gazebo/omx_gripper_sub_publisher
