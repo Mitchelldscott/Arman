@@ -17,12 +17,10 @@ open_manipulator_robot:
 
   gripper:
     joint: gripper
-    pid: {p: 100.0, i: 0.01, d: 0.0}
     type: effort_controllers/JointPositionController
     
   gripper_sub:
     joint: gripper_sub
-    pid: {p: 100.0, i: 0.01, d: 0.0}
     type: effort_controllers/JointPositionController
 
   joint_state_controller:
